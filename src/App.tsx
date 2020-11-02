@@ -24,6 +24,14 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+//pages
+import Login from './pages/Login';
+import AddItem from './pages/AddItem';
+import Profile from './pages/Profile';
+import APPLINKS from './helpers/Const';
+import Catalog from './pages/Catalog';
+import Settings from './pages/Settings';
+
 const App: React.FC = () => {
 
   return (
@@ -33,12 +41,17 @@ const App: React.FC = () => {
           <Menu />
           <IonRouterOutlet id="main">
             <Route path="/page/:name" component={Page} exact />
-            <Redirect from="/" to="/page/Inbox" exact />
+            <Route path={APPLINKS.login} component={Login} exact />
+            <Route path={APPLINKS.addItem} component={AddItem} exact />
+            <Route path={APPLINKS.profile} component={Profile} exact />
+            <Route path={APPLINKS.catalog} component={Catalog} exact />
+            <Route path={APPLINKS.settings} component={Settings} exact />
+            <Redirect from="/" to={APPLINKS.catalog} exact />
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>
     </IonApp>
   );
 };
-
+ 
 export default App;
