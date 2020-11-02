@@ -1,7 +1,7 @@
 const APPLINKS = {
     login: '/login',
     catalog: '/catalog',
-    item: (id) => (`/item/${id}`), 
+    item: `/:shop/item/:id`, 
     addItem: '/addItem',
 
     shop: '/shop/:shop',

@@ -31,6 +31,7 @@ import Profile from './pages/Profile';
 import APPLINKS from './helpers/Const';
 import Catalog from './pages/Catalog';
 import Settings from './pages/Settings';
+import Item from './pages/Item';
 
 const App: React.FC = () => {
 
@@ -43,6 +44,7 @@ const App: React.FC = () => {
             <Route path="/page/:name" component={Page} exact />
             <Route path={APPLINKS.login} component={Login} exact />
             <Route path={APPLINKS.addItem} component={AddItem} exact />
+            <Route path={APPLINKS.item} component={Item} exact />
             <Route path={APPLINKS.profile} component={Profile} exact />
             <Route path={APPLINKS.catalog} component={Catalog} exact />
             <Route path={APPLINKS.settings} component={Settings} exact />

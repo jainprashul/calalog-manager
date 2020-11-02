@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from 'react'
-import { IonButton, IonCard, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonLoading, IonPage, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButton, IonButtons, IonCard, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonLoading, IonPage, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
 import { compressImage, createToast } from '../helpers/hooks';
 import { FirebaseContext } from '../context/FirebaseContext';
 import { APPSTRING } from '../helpers/Const';
@@ -28,17 +28,16 @@ const AddItem = () => {
         }, () => {
             uploadTask.snapshot.ref.getDownloadURL().then(url => {
                 setUrl(url);
+                loadingController.dismiss();
                 createToast('Upload Success');
 
                 const data = {
-                    name, description, photo: url
+                    name, description, photo: url, like : 1
                 }
         
                 console.log(data);
         
-                firebase.addItem(data).then( res => {
-                    // console.log(res);
-                });
+                firebase.addItem(uid, data);
             })
         });
     }
@@ -50,7 +49,7 @@ const AddItem = () => {
          if (e.target.files && e.target.files[0]) {
             compressImage(e.target.files).then(({ photo, info }) => {
 
-                currentPhotoFile = photo.data
+                currentPhotoFile = photo.data;
 
                 console.log(currentPhotoFile);
 
@@ -81,6 +80,9 @@ const AddItem = () => {
         <IonPage>
         <IonHeader>
           <IonToolbar>
+              <IonButtons slot='start'>
+                  <IonBackButton/>
+              </IonButtons>
             <IonTitle>Add IteM</IonTitle>
           </IonToolbar>
         </IonHeader>
