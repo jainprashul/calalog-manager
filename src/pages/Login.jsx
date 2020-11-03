@@ -77,6 +77,9 @@ const Login = () => {
                 // await saveDeviceToken();
                 setLoading(false);
                 setError(null);
+
+                // eslint-disable-next-line no-restricted-globals
+                location.reload();
             }
 
         }).catch(err => {
