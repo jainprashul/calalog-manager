@@ -20,6 +20,7 @@ const Settings = () => {
                 cssClass: 'signout',
                 handler: () => {
                     firebase.doSignOut();
+                    localStorage.removeItem('uid');
                     // history.replace(ROUTE.signin);
                 }
             },

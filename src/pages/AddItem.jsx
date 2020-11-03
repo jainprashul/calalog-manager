@@ -2,11 +2,12 @@ import React, { useContext, useRef, useState } from 'react'
 import { IonBackButton, IonButton, IonButtons, IonCard, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonLoading, IonPage, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
 import { compressImage, createToast } from '../helpers/hooks';
 import { FirebaseContext } from '../context/FirebaseContext';
-import { APPSTRING } from '../helpers/Const';
+import APPLINKS, { APPSTRING } from '../helpers/Const';
 import { loadingController } from '@ionic/core';
+import withAuthorization from '../context/withAuthorization';
 let currentPhotoFile = null;
 
-const AddItem = () => {
+const AddItem = ({history}) => {
 
     const firebase = useContext(FirebaseContext);
     let uid = localStorage.getItem('uid');
@@ -29,15 +30,19 @@ const AddItem = () => {
             uploadTask.snapshot.ref.getDownloadURL().then(url => {
                 setUrl(url);
                 loadingController.dismiss();
-                createToast('Upload Success');
-
                 const data = {
-                    name, description, photo: url, like : 1
+                    name,
+                    description, 
+                    photo: url, 
+                    like : 1
                 }
         
                 console.log(data);
         
                 firebase.addItem(uid, data);
+                createToast('Upload Success');
+
+                history.replace(APPLINKS.catalog);
             })
         });
     }
@@ -119,4 +124,4 @@ const AddItem = () => {
     )
 }
 
-export default AddItem
+export default withAuthorization(AddItem)

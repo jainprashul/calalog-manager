@@ -1,10 +1,16 @@
 import React, { useContext, useState } from 'react';
-import { IonBackButton, IonButton, IonButtons, IonCard, IonCardHeader, IonCardTitle, IonContent, IonHeader, IonIcon, IonMenuButton, IonPage, IonText, IonTitle, IonToolbar, useIonViewWillEnter } from '@ionic/react';
+import { IonBackButton, IonButton, IonButtons, IonCard, IonCardHeader, IonCardTitle, IonContent, IonHeader, IonIcon, IonInput, IonMenuButton, IonPage, IonText, IonTitle, IonToolbar, useIonViewWillEnter } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
+
+import { Plugins } from '@capacitor/core';
 import './Item.css';
 import APPLINKS from '../helpers/Const';
 import { FirebaseContext } from '../context/FirebaseContext';
-import { checkmark, checkmarkSharp, pencilSharp, ticketSharp } from 'ionicons/icons';
+import { checkmark, checkmarkSharp, heart, pencilSharp, ticketSharp } from 'ionicons/icons';
+import withAuthorization from '../context/withAuthorization';
+import ItemEdit from '../components/ItemEdit';
+
+const { Share } = Plugins;
 
 const Item = ({ match }) => {
   const firebase = useContext(FirebaseContext);
@@ -12,6 +18,8 @@ const Item = ({ match }) => {
   const [item, setItem] = useState({});
   const [liked, setLiked] = useState(false);
   const [editing, setEditing] = useState(false);
+
+
 
   const { photo, name, description, like } = item;
   useIonViewWillEnter(() => {
@@ -29,18 +37,29 @@ const Item = ({ match }) => {
   }
 
   function shareLink() {
-    if (navigator.canShare) {
-      navigator.share({
-        title: `${name} - Priti Jain (VidyaSagar Collection)`,
-        text: `Check Out the Pattern and Collection from VidyaSagar Collection. /n Contact 8989488761`,
-        url: `${window.location.href}`,
-      })
-        .then(() => console.log('Share was successful.'))
-        .catch((error) => console.log('Sharing failed', error));
-    } else {
-      console.log(`Your system doesn't support sharing files.`);
-    }
+
+    Share.share({
+      title: `${name} - ${'User'} (${'Shop Name'})`,
+      url: `${window.location.href}`,
+      dialogTitle: `${name} - ${'User'} (${'Shop Name'})`,
+      text: `Check Out the Pattern and Collection from ${'Shop Name'}. \n Contact ${'number'} \n`
+
+    });
+    // if (navigator.canShare) {
+    //   navigator.share({
+    //     title: `${name} - Priti Jain (VidyaSagar Collection)`,
+    //     text: `Check Out the Pattern and Collection from VidyaSagar Collection. /n Contact 8989488761`,
+    //     url: `${window.location.href}`,
+    //   })
+    //     .then(() => console.log('Share was successful.'))
+    //     .catch((error) => console.log('Sharing failed', error));
+    // } else {
+    //   console.log(`Your system doesn't support sharing files.`);
+    // }
   }
+
+  let title = editing ? `Editing - ${name}` : name;
+
   return (
     <IonPage>
       <IonHeader>
@@ -48,7 +67,7 @@ const Item = ({ match }) => {
           <IonButtons slot='start'>
             <IonMenuButton />
           </IonButtons>
-          <IonTitle className=''>{name}</IonTitle>
+          <IonTitle className=''>{title}</IonTitle>
 
           <IonButtons slot='end'>
             {!editing ?
@@ -59,23 +78,28 @@ const Item = ({ match }) => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding" fullscreen>
-        <IonCard className='ion-padding ion-justify-content-center ion-text-center' >
-          <img src={photo} alt="" width="360" />
-          <IonCardHeader className='ion-padding'>
-            <IonCardTitle>{name}</IonCardTitle>
-            <p>
-              <IonText>{description}</IonText>
-              <p>{like} people likes this.</p>
-            </p>
+        {
+          editing ?
+            <ItemEdit name={name} description={description} photo={photo} setEditing={setEditing} shop={shop} id={id} /> 
+            :
+            <IonCard className='ion-padding ion-justify-content-center ion-text-center' >
+              <img src={photo} alt="" width="70%" />
+              <IonCardHeader className='ion-padding'>
+                <IonCardTitle>{name}</IonCardTitle>
+                <p>
+                  <IonText>{description}</IonText>
+                  <p>{like} people likes this.</p>
+                </p>
 
-            <IonButton fill="outline" onClick={shareLink}>Share</IonButton>
-            <IonButton fill="outline" disabled={liked} onClick={likeADD}>Like</IonButton>
-          </IonCardHeader>
-        </IonCard>
+                <IonButton fill="outline" onClick={shareLink}>Share</IonButton>
+                <IonButton fill="outline" disabled={liked} onClick={likeADD}>Like <IonIcon icon={heart} /></IonButton>
+              </IonCardHeader>
+            </IonCard>
+        }
       </IonContent>
     </IonPage>
   );
 };
 
 
-export default Item;
+export default withAuthorization(Item);
