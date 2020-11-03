@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonButtons, IonBackButton, IonIcon, IonFooter, IonMenuButton, IonImg } from '@ionic/react'
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonButtons, IonIcon, IonFooter, IonMenuButton } from '@ionic/react'
 import { alertController } from '@ionic/core';
 import { FirebaseContext } from '../context/FirebaseContext';
-import { logOut, share, shareSocial } from 'ionicons/icons';
+import { logOut } from 'ionicons/icons';
 import withAuthorization from '../context/withAuthorization';
 import { saveAs } from 'file-saver';
 

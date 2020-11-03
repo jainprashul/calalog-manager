@@ -1,14 +1,14 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonItem, IonLabel, IonInput, IonLoading, useIonViewDidEnter, IonToggle, IonFooter, IonMenuButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonText } from '@ionic/react';
-import { alertController, loadingController } from '@ionic/core';
+import React, { useState, useContext } from 'react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonItem, IonLabel, IonInput, useIonViewDidEnter, IonMenuButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonText } from '@ionic/react';
+import { loadingController } from '@ionic/core';
 import withAuthorization from '../context/withAuthorization';
-import { logOut, camera, personCircleOutline, settings, pencilSharp, checkmarkSharp } from 'ionicons/icons';
-import APPLINKS, { APPSTRING } from '../helpers/Const';
-import { createToast, useLocalStorage, compressImage } from '../helpers/hooks';
+import { personCircleOutline, pencilSharp, checkmarkSharp } from 'ionicons/icons';
+import APPLINKS from '../helpers/Const';
+import { createToast } from '../helpers/hooks';
 import { FirebaseContext } from '../context/FirebaseContext';
 import './Profile.css';
 
-const Profile = ({ history }) => {
+const Profile = () => {
   // console.log(history);
   const firebase = useContext(FirebaseContext);
 
@@ -99,7 +99,7 @@ const Profile = ({ history }) => {
         <IonCard>
           <IonCardHeader>
             <IonCardSubtitle>Your Website Link</IonCardSubtitle>
-            <IonText><a href={shopUrl} target="_blank" >{shopUrl}</a></IonText>
+            <IonText><a href={shopUrl} target="_blank" rel="noopener noreferrer" >{shopUrl}</a></IonText>
 
             <IonButton expand='block' className='ion-padding' color='dark' routerLink={APPLINKS.settings} shape='round'>Generate QR Code</IonButton>
           </IonCardHeader>

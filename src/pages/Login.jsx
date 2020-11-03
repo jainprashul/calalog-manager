@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardContent, IonProgressBar, IonButton, IonIcon, IonText, useIonViewDidEnter, useIonViewWillEnter, useIonViewDidLeave, IonInput, IonItem, IonLabel } from '@ionic/react'
-import { logoGoogle, logoFacebook } from 'ionicons/icons';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardContent, IonProgressBar, IonButton, IonIcon, useIonViewDidEnter, useIonViewWillEnter, useIonViewDidLeave, IonInput, IonItem, IonLabel } from '@ionic/react'
+import { logoGoogle } from 'ionicons/icons';
 import { FirebaseContext } from '../context/FirebaseContext';
 import { createToast, useRouter, useMenuHide} from '../helpers/hooks';
 import {loadingController } from '@ionic/core'
@@ -43,7 +43,7 @@ const Login = () => {
 
 
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [, setError] = useState(null);
 
 
     function signIn(doSignInWith) {

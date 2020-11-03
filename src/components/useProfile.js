@@ -1,3 +1,7 @@
+/* eslint-disable no-restricted-globals */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+
 function onChangeAvatar(event) {
     if (event.target.files && event.target.files[0]) {
       // Check this file is an image?

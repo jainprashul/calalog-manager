@@ -4,7 +4,7 @@ import './Catalog.css';
 import { FirebaseContext } from '../context/FirebaseContext';
 import CatalogItem from '../components/CatalogItem';
 import withAuthorization from '../context/withAuthorization';
-import { addCircleOutline, arrowForwardCircle } from 'ionicons/icons';
+import { addCircleOutline } from 'ionicons/icons';
 import APPLINKS from '../helpers/Const';
 
 const Catalog = ({location}) => {
