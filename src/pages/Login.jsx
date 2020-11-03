@@ -55,17 +55,12 @@ const Login = () => {
                 // console.log(result);
                 if (result.docs.length === 0) {
                     setNewUserData(user).then((res) => {
-                        // save to local
-                        // localStorage.setItem(AppString.ID, res.id);
-                        // localStorage.setItem(AppString.NICKNAME, res.nickname);
-                        // localStorage.setItem(AppString.PHOTO_URL, res.photoUrl);
-                        // localStorage.setItem(AppString.PHOTO_URL, res.aboutMe);
-                        localStorage.setItem('userData', res);
+                        localStorage.setItem('userData', JSON.stringify(res));
                     })
 
                     router.replace('/profile', {user : res , userData: user})
                 } else {
-                    let { id, nickname, photoUrl, aboutMe } = result.docs[0].data();
+                    let { id } = result.docs[0].data();
                         
                     // // save to local
                     localStorage.setItem('uid', id);
@@ -94,12 +89,12 @@ const Login = () => {
     async function setNewUserData(userData) {
 
         console.log(userData);
-        let nickname = userData.phoneNumber ? userData.phoneNumber : 'usr-'+ userData.displayName
+        let name = userData.phoneNumber ? userData.phoneNumber : userData.displayName
         let photoURL = userData.photoURL ? userData.photoURL : 'https://image.flaticon.com/icons/svg/847/847969.svg'
         const newUser = {
             id: userData.uid,
             email: userData.email,
-            nickname: nickname,
+            name: name,
             shop: '',
             location: '',
             photoUrl: photoURL,

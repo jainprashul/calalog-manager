@@ -1,12 +1,22 @@
 import React, { useContext } from 'react'
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonButtons, IonBackButton, IonIcon, IonFooter, IonMenuButton } from '@ionic/react'
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonButtons, IonBackButton, IonIcon, IonFooter, IonMenuButton, IonImg } from '@ionic/react'
 import { alertController } from '@ionic/core';
 import { FirebaseContext } from '../context/FirebaseContext';
 import { logOut, share, shareSocial } from 'ionicons/icons';
 import withAuthorization from '../context/withAuthorization';
+import { saveAs } from 'file-saver';
 
 const Settings = () => {
     const firebase = useContext(FirebaseContext);
+
+    document.title = 'Settings';
+
+    function generateQRC() {
+        let uid = localStorage.getItem('uid');
+        const shopUrl = `https://catalog-alpha.now.sh/${uid}`
+        let url = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURI(shopUrl)}&size=`
+        return url;
+    }
 
     function signOut() {
 
@@ -38,36 +48,36 @@ const Settings = () => {
             <IonHeader>
                 <IonToolbar>
                     <IonButtons slot='start'>
-                        <IonMenuButton/>
+                        <IonMenuButton />
                     </IonButtons>
                     <IonTitle title="Settings">Settings</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent className='ion-padding'>
-                {/* <div className="share ion-padding">
-                    <IonButton color="success" expand='block' shape='round' onClick={e => {
-                        navigator.share({
-                            title: 'ChatBoi',
-                            text: 'Support Local for Vocal \n Atmanirbhar Bharat initiative \n Download via Link : \n https://chatboi.now.sh/share/chatboi.apk \n \n Website: \n',
-                            url: 'https://chatboi.now.sh',
-                        })
-                    }}>
-                        <IonIcon icon={shareSocial} />  
-                        Share this</IonButton>
 
-                </div> */}
+            <div className="ion-text-center">
+            <img alt="QRCode" src={generateQRC()}></img>
+
+            <br/>
+
+            <IonButton fill="outline" onClick={() => { saveAs(generateQRC() , 'qrcode.png')}}>Download QR Code</IonButton> 
+
+            </div>
+        
+
                 <div className="logout ion-padding">
                     <IonButton color="danger" expand='block' shape='round' onClick={signOut}>
-                        <IonIcon icon={logOut}/>
+                        <IonIcon icon={logOut} />
                         Log Out</IonButton>
                 </div>
+
             </IonContent>
 
             <IonFooter className="ion-text-center">
                 <p>
                     <span role="img" aria-labelledby="hearts">💖</span>
                     Made In India Initiative💖</p>
-                <p>Developed by <a href="https://jainprashul.now.sh" rel="noopener noreferrer" target="_blank">xpJain</a> </p>
+                <p>Developed by <a href="https://jainprashul.now.sh" rel="noopener noreferrer" target="_blank">xpJain Services</a> </p>
             </IonFooter>
         </IonPage>
     )

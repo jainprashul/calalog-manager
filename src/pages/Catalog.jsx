@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { IonButtons, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonMenuButton, IonPage, IonRow, IonText, IonTitle, IonToolbar, useIonViewDidEnter } from '@ionic/react';
+import { IonButtons, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonMenuButton, IonPage, IonRow, IonSpinner, IonText, IonTitle, IonToolbar, useIonViewDidEnter } from '@ionic/react';
 import './Catalog.css';
 import { FirebaseContext } from '../context/FirebaseContext';
 import CatalogItem from '../components/CatalogItem';
@@ -13,7 +13,15 @@ const Catalog = ({location}) => {
   const [items, setItems] = useState([])
 
   useIonViewDidEnter(()=> {
+
+    document.title = 'Catalog';
+
     let uid = localStorage.getItem('uid');
+
+    firebase.getUser(uid).then(res => {
+        let user = res.docs[0].data();
+        document.title = `Catalog - ${user.shop}`
+    })
     firebase.getCatalog(uid).then(async (res) => {
       let arr = [];
       const docs = await res.docs;
@@ -25,7 +33,8 @@ const Catalog = ({location}) => {
 
       setItems(arr);
       // console.log(res);
-    })
+    });
+
   })
 
   const CatalogItems = items.map((item, i) => (
@@ -50,6 +59,8 @@ const Catalog = ({location}) => {
           <IonRow>
             {items.length ? CatalogItems : 
             <p class="ion-text-center ">
+                <IonSpinner class="spinner ion-padding"></IonSpinner>
+
                 <IonText >Add your items to the catalog here...</IonText>
             </p>}
           </IonRow>
