@@ -8,7 +8,7 @@ import { addCircleOutline, arrowForwardCircle } from 'ionicons/icons';
 import APPLINKS from '../helpers/Const';
 
 const Catalog = ({location}) => {
-    console.log(location);
+    // console.log(location);
   const firebase = useContext(FirebaseContext)
   const [items, setItems] = useState([])
 
