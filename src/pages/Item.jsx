@@ -18,11 +18,18 @@ const Item = ({ match }) => {
   const [item, setItem] = useState({});
   const [liked, setLiked] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [shopDtl, setShopDtl] = useState({});
 
 
 
   const { photo, name, description, like } = item;
   useIonViewWillEnter(() => {
+
+    firebase.getUser(shop).then(res => {
+      const user = res.docs[0].data();
+      // console.log(user);
+      setShopDtl(user);
+    })
     firebase.getItem(shop, id).then(item => {
       console.log(item.data());
       setItem(item.data());
@@ -39,10 +46,10 @@ const Item = ({ match }) => {
   function shareLink() {
 
     Share.share({
-      title: `${name} - ${'User'} (${'Shop Name'})`,
-      url: `${window.location.href}`,
-      dialogTitle: `${name} - ${'User'} (${'Shop Name'})`,
-      text: `Check Out the Pattern and Collection from ${'Shop Name'}. \n Contact ${'number'} \n`
+      title: `${name} - ${shopDtl.shop} (${shopDtl.name})`,
+      url: `https://catalog-alpha.now.sh${window.location.pathname}`,
+      dialogTitle: `${name} - ${shopDtl.shop} (${shopDtl.name})`,
+      text: `Check Out the Pattern and Collection from ${shopDtl.shop}. \n Contact ${shopDtl.phoneNumber} \n`
 
     });
     // if (navigator.canShare) {
