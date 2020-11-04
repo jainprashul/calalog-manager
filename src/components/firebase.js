@@ -18,7 +18,6 @@ const firebaseConfig = {
 };
 
 
-const xxx = '5HTrpI4fyZ4JUbaPQGqO';
 
 class Firebase {
   constructor() {

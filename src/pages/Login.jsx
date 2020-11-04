@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React, { useState, useContext } from 'react'
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardContent, IonProgressBar, IonButton, IonIcon, useIonViewDidEnter, useIonViewWillEnter, useIonViewDidLeave, IonInput, IonItem, IonLabel } from '@ionic/react'
 import { logoGoogle } from 'ionicons/icons';
@@ -59,6 +60,8 @@ const Login = () => {
                     })
 
                     router.replace('/profile', {user : res , userData: user})
+
+                    location.reload();
                 } else {
                     let { id } = result.docs[0].data();
                         
@@ -70,8 +73,9 @@ const Login = () => {
 
                     setTimeout(() => {
                     router.replace('/', {user: result.docs[0].data()});
-
-                    }, 2000)
+                    location.reload();
+                    
+                    })
                 }
                 createToast("Login Sucess..")
                 // await saveDeviceToken();
@@ -79,7 +83,6 @@ const Login = () => {
                 setError(null);
 
                 // eslint-disable-next-line no-restricted-globals
-                location.reload();
             }
 
         }).catch(err => {
