@@ -56,12 +56,14 @@ const Login = () => {
                 // console.log(result);
                 if (result.docs.length === 0) {
                     setNewUserData(user).then((res) => {
-                        localStorage.setItem('userData', JSON.stringify(res));
+                        // localStorage.setItem('userData', JSON.stringify(res));
+                        localStorage.setItem('uid', res.id);
+
                     })
 
                     router.replace('/profile', {user : res , userData: user})
 
-                    location.reload();
+                    location.replace('/profile');
                 } else {
                     let { id } = result.docs[0].data();
                         
@@ -73,8 +75,7 @@ const Login = () => {
 
                     setTimeout(() => {
                     router.replace('/', {user: result.docs[0].data()});
-                    location.reload();
-                    
+                    location.replace('/');  
                     })
                 }
                 createToast("Login Sucess..")
