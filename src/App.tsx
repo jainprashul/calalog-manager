@@ -41,14 +41,6 @@ const App: React.FC = () => {
       <IonReactRouter>
         <IonSplitPane contentId="main">
           <Menu />
-          <Adsense
-            client="ca-pub-3293457121953901"
-            slot="7259870550"
-            style={{ display: 'block' }}
-            layout="in-article"
-            format="fluid"
-          />
-
           <IonRouterOutlet id="main">
             <Route path="/page/:name" component={Page} exact />
             <Route path={APPLINKS.login} component={Login} exact />
@@ -61,6 +53,7 @@ const App: React.FC = () => {
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>
+      
     </IonApp>
   );
 };
